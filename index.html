@@ -1,0 +1,123 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>jQuery Add / Remove Table Rows</title>
+<style type="text/css">
+    table{
+        width: 100%;
+        margin: 20px 0;
+        border-collapse: collapse;
+    }
+    table, th, td{
+        border: 1px solid #cdcdcd;
+    }
+    table th, table td{
+        padding: 5px;
+        text-align: left;
+    }
+</style>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script type="text/javascript">
+    // $(document).ready(function(){
+    //     $(".add-row").click(function(){
+    //         var name = $("#name").val();
+    //         var email = $("#email").val();
+    //         var markup = "<tr><td>" + name + "</td><td>" + email + "</td></tr>";
+    //         $("table tbody").append(markup);
+    //     });
+        
+    //     // Find and remove selected table rows
+    //     // $(".delete-row").click(function(){
+    //     //     $("table tbody").find('input[name="record"]').each(function(){
+    //     //         if($(this).is(":checked")){
+    //     //             $(this).parents("tr").remove();
+    //     //         }
+    //     //     });
+    //     // });
+    // });    
+
+        var a ;
+
+    $(document).ready(function() {  
+        $.ajax({  
+            // url: 'https://api.github.com/users',  
+            url : 'https://www.masstamilan.org/img/kanchana-3-2019.jpg',
+           
+            type: 'GET',  
+              
+            dataType: 'json',  
+       
+            success: function(data, textStatus, xhr) {  
+              
+                console.log(data);  
+              a=data;
+              console.log(a.length);
+              
+                // for(var i = 0;i<a.length;i++){
+                  
+                //    $(".add-row").ready(function(){
+                //        var id = a[i]['id'];
+                //         var login = a[i]['login'];
+                //         var repos_url = a[i]['repos_url'];
+                //         var site_admin=a[i]['site_admin'];
+                //         var type = a[i]['type'];
+                //         var markup = "<tr><td>"+id+"</td><td>" + login + "</td><td>"+ "<a href="+repos_url+" target='blank'>"+repos_url +"</a>"  + "</td><td>"+ site_admin +"</td><td>"+type+"</td></tr>";
+                //         $("table tbody").append(markup);
+                //     });
+                // }
+
+
+        //       $(".add-row").ready(function(){
+        //     var name = $("#name").val();
+        //     var email = $("#email").val();
+        //     var markup = "<tr><td>" + name + "</td><td>" + email + "</td></tr>";
+        //     $("table tbody").append(markup);
+        // });
+            },  
+            error: function(xhr, textStatus, errorThrown) {  
+                console.log('Error in Database');  
+
+            }  
+        }); 
+// console.log(a);
+
+
+        //  $(".add-row").click(function(){
+        //     var name = $("#name").val();
+        //     var email = $("#email").val();
+        //     var markup = "<tr><td>" + name + "</td><td>" + email + "</td></tr>";
+        //     $("table tbody").append(markup);
+        // }); 
+    });  
+</script>
+</head>
+<body>
+    <!-- <form>
+        <input type="text" id="name" placeholder="Name">
+        <input type="text" id="email" placeholder="Email Address">
+        <input type="button" class="add-row" value="Add Row">
+    </form> -->
+    <table>
+        <thead>
+            <tr>
+                <!-- <th>Select</th> -->
+                <th>id</th>
+                <th>login</th>
+                <th>repos_url</th>
+                <th>site_admin</th>
+                <th>type</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- <tr>
+                <!- <td><input type="checkbox" name="record"></td> ->
+                <td>Peter Parker</td>
+                <td>peterparker@mail.com</td>
+            </tr> -->
+        </tbody>
+    </table>
+    <!-- <button type="button" class="delete-row">Delete Row</button> -->
+</body> 
+</html>

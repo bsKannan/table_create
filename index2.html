@@ -1,0 +1,406 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>jQuery Add / Remove Table Rows</title>
+<style type="text/css">
+    table{
+        width: 100%;
+        margin: 20px 0;
+        border-collapse: collapse;
+    }
+    table, th, td{
+        border: 1px solid #cdcdcd;
+    }
+    table th, table td{
+        padding: 5px;
+        text-align: left;
+    }
+</style>
+
+<!-- <script src="./datatables.min.js"></script>
+	<script src="./select2.min.js"></script>
+	<script src="./datatables_basic.js"></script> -->
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
+  
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
+
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+
+<script type="text/javascript">
+
+
+        var a;
+        var b;
+        
+
+//     $(document).ready(function() {
+//     // Setup - add a text input to each footer cell
+//     $('#example thead tr').clone(true).appendTo( '#example thead' );
+//     $('#example thead tr:eq(1) th').each( function (i) {
+//         var title = $(this).text();
+//         $(this).html( '<input type="text" placeholder="Search '+title+'" />' );
+ 
+//         $( 'input', this ).ready( 'keyup change', function () {
+//             if ( table.column(i).search() !== this.value ) {
+//                 table
+//                     .column(i)
+//                     .search( this.value )
+//                     .draw();
+//             }
+//         } );
+//     } );
+ 
+//     var table = $('#example').DataTable();
+
+// } );
+
+
+
+    // function dropdownoption(){
+        $(document).ready(function () {
+	// myContract.methods.show_last_record_id().call(function(er,result){
+        $.ajax({
+            type: 'GET',
+
+            url: 'https://cricketapi.platform.iplt20.com/teams',  
+        // CHANGE THIS URL ACCORDING TO YOUR REQUIREMENT.
+            
+            dataType: 'json',
+
+            success: function(data1, textStatus, xhr) {
+                b=data1;
+              for(var i = 0;i<b['content'].length;i++){
+                var abbreviation = b['content'][i]['abbreviation'];
+                console.log(abbreviation);
+                
+		            $("#dropdownState").append('<option>'+abbreviation+' </option>');		
+	}	
+            }
+		
+})
+})
+
+var table;
+function fun() {
+    table = $('#example').DataTable();
+    table
+    .clear()
+    .draw();
+    //alert("hello")
+    var k = document.getElementById('url').value;
+    var j;
+    //alert(k.toString())
+if('CSK' === k)
+{
+j=1
+}
+if('DEC' === k)
+{
+j=2
+}
+if('DC' === k)
+{
+j=3
+}
+if('KXIP' === k)
+{
+j=4
+}
+if('KKR'=== k)
+{
+j=5
+}
+if('MI' === k)
+{
+j=6
+}
+if('PWI' === k)
+{
+j=7
+}
+if('RR' === k)
+{
+j=8
+}
+if('RCB' === k)
+{
+j=9
+}
+if('KTK' === k)
+{
+j=10
+}
+
+   // $(document).ready(function() {  
+        // for(var i=1;i<=10;i++){
+        //     var d =i;
+        //     console.log(d);
+            
+            $.ajax({  
+            url: 'https://cricketapi.platform.iplt20.com/stats/players?teamIds= '+j+'&tournamentIds=10192&scope=TOURNAMENT&pageSize=30',
+           
+            type: 'GET',  
+              
+            dataType: 'json',  
+       
+            success: function(data1, textStatus, xhr) {  
+              
+                console.log(data1);  
+                var team=data1['team']['fullName']
+               var  a=data1['stats']['content'];
+               console.log(team);
+               console.log(a);
+               console.log(a[0]["player"]["fullName"]);
+               
+            //    [""0""].player.fullName
+                for(var i = 0;i<a.length;i++){
+                
+                
+                    // var  a=data1['stats']['content'];
+                   //$(".add").ready(function(){
+                    //    var id = a[i]['player']['id'];
+                    //     var fullName = a[i]['player']['fullName'];
+                    //     var Nationality=a[i]['player']['nationality'];
+                    //     var dateOfBirth = a[i]['player']['dateOfBirth'];
+                    //     var markup = "<tr><td>"+id+"</td><td>" + fullName + "</td><td>"+  dateOfBirth  + "</td><td>"+ Nationality +"</td><td>"+ team +"</td></tr>";
+                    //     $("table #kings").append(markup);
+
+                   
+                    table.row.add([a[i]['player']['id'],a[i]['player']['dateOfBirth'],
+                    a[i]['player']['fullName'],a[i]['player']['nationality'],
+                    a[i]['player']['shortName'],""]).draw();
+                  //  }).draw();
+
+                    // var table = $('#example').DataTable();
+                    // table.row.add([a['stats']['content'][i]['player']['id'],a['stats']['content'][i]['player']['dateOfBirth'],
+                    // a['stats']['content'][i]['player']['fullName'],a['stats']['content'][i]['player']['nationality'],
+                    // a['stats']['content'][i]['player']['shortName'],""])
+                }
+            },  
+            error: function(xhr, textStatus, errorThrown) {  
+                console.log('Error in Database');  
+
+            }  
+        }); 
+    
+        // }
+
+
+
+    // })
+}
+
+
+
+
+// $(document).ready(function() {  
+//         $.ajax({  
+//             url: 'https://cricketapi.platform.iplt20.com/stats/players?teamIds=1&tournamentIds=10192&scope=TOURNAMENT&pageSize=30',  
+           
+//             type: 'GET',  
+              
+//             dataType: 'json',  
+       
+//             success: function(data, textStatus, xhr) {  
+              
+//                 console.log(data);  
+//               a=data;
+//               console.log((a['stats']['content']).length);
+              
+//               console.log(a['stats']['content'][0]['player']['id']);
+              
+//             //   stats.content[""0""].player.id
+//                 for(var i = 0;i<(a['stats']['content']).length;i++){
+                  
+
+//                     var table = $('#example').DataTable();
+//                     table.row.add([a['stats']['content'][i]['player']['id'],a['stats']['content'][i]['player']['dateOfBirth'],
+//                     a['stats']['content'][i]['player']['fullName'],a['stats']['content'][i]['player']['nationality'],
+//                     a['stats']['content'][i]['player']['shortName'],""])
+//             //###################//NORMAL WAYS#########################################################3
+//                 //    $(".add-row").ready(function(){
+//                 //        var id = a['stats']['content'][i]['player']['id'];
+//                 //        var dateOfBirth =a['stats']['content'][i]['player']['dateOfBirth'];
+//                 //        var fullName = a['stats']['content'][i]['player']['fullName'];
+//                 //       var nationality= a['stats']['content'][i]['player']['nationality'];
+//                 //       var shortName= a['stats']['content'][i]['player']['shortName'];
+//                 //         // var markup = "<tr><td>"+id+"</td><td>" + login + "</td><td>"+ "<a href="+repos_url+" target='blank'>"+repos_url +"</a>"  + "</td><td>"+ site_admin +"</td><td>"+type+"</td></tr>";
+//                 //         var markup = "<tr><td>"+id+"</td><td>"+fullName+"</td><td>"+dateOfBirth+"</td><td>"+nationality+"</td><td>"+shortName+"</td></tr>";
+//                 //         $("table #tbody").append(markup);
+//                 //     });
+//                 }
+//             },  
+//             error: function(xhr, textStatus, errorThrown) {  
+//                 console.log('Error in Database');  
+
+//             }  
+//         }); 
+
+//     });  
+
+
+//################################TEAMS###################################//
+
+    // $(document).ready(function() {  
+    //     $.ajax({  
+    //         url: 'https://cricketapi.platform.iplt20.com/teams',  
+           
+    //         type: 'GET',  
+              
+    //         dataType: 'json',  
+       
+    //         success: function(data1, textStatus, xhr) {  
+              
+    //             console.log(data1);  
+    //           b=data1;
+    //           console.log(b['content']);
+              
+    //         //   console.log(a['stats']['content'][0]['player']['id']);
+              
+    //         // //   stats.content[""0""].player.id
+    //             for(var i = 0;i<b['content'].length;i++){
+                  
+    //                $(".add-row").ready(function(){
+    //                     var id = b['content'][i]['id'];
+    //                     var abbreviation = b['content'][i]['abbreviation'];
+    //                     var fullName = b['content'][i]['fullName'];
+
+    //                     var markup1 = "<tr><td>"+id+"</td><td>"+abbreviation+"</td><td>"+fullName+"</td></tr>";
+    //                     var markup2 = "<li>"+abbreviation+"</li>"
+    //                     $("table #tbo").append(markup1);
+    //                 });
+    //             }
+    //         },  
+    //         error: function(xhr, textStatus, errorThrown) {  
+    //             console.log('Error in Database');  
+
+    //         }  
+    //     }); 
+
+    // }); 
+</script>
+</head>
+<body>
+
+    <div>
+        <!-- <nav class="navbar navbar-dark bg-primary"> -->
+            <nav class="navbar navbar-light" style="background-color: #f3a862;">
+            <div class="container-fluid ">
+                <div class="navbar-header">
+                <a class="navbar-brand " href="#" style="font:bold;">IPL</a>
+                </div>
+                <ul class="nav navbar-nav">
+                <li class="active"><a href="#" style="font:bold;">Home</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                        <!-- <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Teams<span class="caret"></span></a> -->
+                            <!-- <ul class="dropdown-menu"> -->
+                            <!-- <li class="teams"></li> -->
+                            <select class="btn btn-primary dropdown-toggle" data-toggle="dropdown" id="url" data-fouc onchange="fun()">
+                                    <optgroup  id="dropdownState">
+                                        <option >Select</option> 
+                                       
+                                    </optgroup>
+                                </select>
+                            <!-- </ul>
+                        </li> -->
+                    <!-- <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+                    <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li> -->
+                </ul>
+            </div>
+        </nav>
+                  
+    </div>
+
+
+
+
+
+
+
+
+<!-- 
+    <div>
+    <table id="example" class="table datatable-basic" style="width:50%">
+        <thead>
+            <tr>
+                
+                <th>Id</th>
+                <th>FullName</th>
+                <th>DateOfBirth</th>
+                <th>Nationality</th>
+                <th>ShortName</th>
+            </tr>
+        </thead>
+        <tbody id="tbody">
+          
+        </tbody>
+    </table>
+    </div><br><br> -->
+
+<!-- 
+    <div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Abbreviation</th>
+                    <th>FullName</th>
+                </tr>
+            </thead>
+            <tbody id="tbo">
+
+            </tbody>
+        </table>
+    </div> -->
+
+    <div>
+            <!-- <table id="example" class="x">
+                    <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>FullName</th>
+                                <th>DateOfBirth</th>
+                                <th>Nationality</th>
+                                <th>ShortName</th>
+                            </tr>
+                        </thead>
+                </table> -->
+
+
+                <table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
+                        <thead style="background-color: darkgray"> 
+                                <tr>
+                                        <th>Id</th>
+                                        <th>FullName</th>
+                                        <th>DateOfBirth</th>
+                                        <th>Nationality</th>
+                                        <th>ShortName</th>
+                                    </tr>
+                        </thead>
+                    
+                       
+                    </table>      
+    </div>
+    
+    
+</body> 
+</html>
+
+<!-- SQL/PL SQL
+DevOps
+REST Webservices 
+MVC   
+ Angular 2.x, HTML 5, CSS 3, JavaScript, JQuery, Core Java 7/8, BootStrap, Ajax, JSON, JUnit, Git, SVN.
+Mandatory Skills: React JS and Backbone JS
+-->
